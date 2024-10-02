@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -19,11 +17,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function show(User $user)
+    public function show(User $user): View|Factory|Application
     {
         return view('show', [
             'user' => $user,
         ]);
     }
-
 }

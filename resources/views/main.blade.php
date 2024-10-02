@@ -1,9 +1,7 @@
 <html>
     @foreach($users as $user)
-        <li><a href="/user/{{$user->id}}">
-            {{ $user->name }} : {{ array_sum($user->scores->map(function ($score) {
-                return $score->score;
-                })->toArray()) }}
+        <li><a href="{{ route("user.show", $user) }}">
+            {{ $user->name }} : {{ $user->getScore() }}
         </a></li>
     @endforeach
 </html>

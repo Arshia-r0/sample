@@ -3,7 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use http\Exception\BadConversionException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -61,5 +63,17 @@ class User extends Authenticatable
     public function referralRecords(): HasManyThrough
     {
         return $this->hasManyThrough(ReferralRecord::class, ReferralCode::class);
+    }
+
+    public function wpUser(): BelongsTo
+    {
+        return $this->belongsTo(\Corcel\Model\User::class, 'wp_user', 'ID');
+    }
+
+    public function getScore(): float|int
+    {
+        return array_sum($this->scores->map(function ($score) {
+            return $score->score;
+        })->toArray());
     }
 }
